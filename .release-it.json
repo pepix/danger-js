@@ -3,6 +3,10 @@
     "release": true,
     "assets": "brew-distribution/*.zip"
   },
+  "npm": {
+    "publish": false,
+    "ignoreVersion": false
+  },
   "buildCommand": "yarn package",
   "hooks": {
     "before:bump": "yarn declarations; yarn build:schemas",
