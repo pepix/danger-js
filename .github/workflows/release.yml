@@ -43,7 +43,10 @@ jobs:
         run: npm run build
 
       - name: Package
-        run: npm run release -- ${{ github.event.inputs.version_digit }} --ci
+        run: |
+          git config --global user.email "me@example.com"
+          git config --global user.name "My Name"
+          npm run release -- ${{ github.event.inputs.version_digit }} --ci
 
       - name: List files in the repository
         run: |
