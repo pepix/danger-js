@@ -41,7 +41,7 @@ jobs:
         run: npm run build
 
       - name: Package
-        run: npm run package
+        run: npm run release -- ${{ github.event.inputs.version_digit }} --ci
 
       - name: List files in the repository
         run: |
