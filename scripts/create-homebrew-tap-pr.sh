@@ -32,6 +32,6 @@ echo "  end" >> danger-js.rb
 echo "end" >> danger-js.rb
 
 # Commit changes
-git add danger-js.rb
-git commit -m "Releasing danger-js version ${VERSION}"
-git push origin master
+# git add danger-js.rb
+# git commit -m "Releasing danger-js version ${VERSION}"
+# git push origin master
