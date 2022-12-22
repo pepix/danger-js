@@ -29,6 +29,7 @@ jobs:
         with:
           ref: test-release-it
       
+      ## Print current branch
       - run: git branch --contains
       
       - name: Use node
@@ -44,8 +45,8 @@ jobs:
 
       - name: Package
         run: |
-          git config --global user.email "me@example.com"
-          git config --global user.name "My Name"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
           npm run release -- ${{ github.event.inputs.version_digit }} --ci
 
       - name: List files in the repository
