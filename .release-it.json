@@ -11,6 +11,6 @@
   "hooks": {
     "before:bump": "yarn declarations; yarn build:schemas",
     "after:bump": "yarn package:x64; yarn package:arm64",
-    "after:release": "export VERSION=${version}"
+    "after:release": "export VERSION=${version}; VERSION=${version} >> $GITHUB_ENV"
   }
 }

@@ -51,7 +51,7 @@ jobs:
       
       - name: Run shell script
         shell: bash
-        run: scripts/create-homebrew-tap-pr.sh
+        run: scripts/create-homebrew-tap-pr.sh $VERSION
 
       - name: Check ruby file
         run: cat danger-js.rb
