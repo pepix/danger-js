@@ -24,6 +24,14 @@ jobs:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - run: echo "Your choice is ${{ github.event.inputs.version_digit }}"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Install ldid
+        uses: MOZGIII/install-ldid-action@v1
+        with:
+          tag: v2.1.5-procursus6
+
       - name: Check out repository code
         uses: actions/checkout@v3
         with:
