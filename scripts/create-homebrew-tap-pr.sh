@@ -50,6 +50,9 @@ echo "    end" >> danger-js.rb
 echo "  end" >> danger-js.rb
 echo "end" >> danger-js.rb
 
+# Remove this
+cat danger-js.rb
+
 # Commit changes
 # git add danger-js.rb
 # git commit -m "Releasing danger-js version ${VERSION}"

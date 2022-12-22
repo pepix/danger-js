@@ -1,4 +1,4 @@
-name: Release
+name: Release executable files for macOS
 
 on:
   workflow_dispatch:
@@ -14,16 +14,11 @@ on:
         - patch
 
 jobs:
-  Release:
+  release:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo "Your choice is ${{ github.event.inputs.version_digit }}"
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -34,11 +29,8 @@ jobs:
 
       - name: Check out repository code
         uses: actions/checkout@v3
-        with:
+        with: # Remove this
           ref: test-release-it
-      
-      ## Print current branch
-      - run: git branch --contains
       
       - name: Use node
         uses: actions/setup-node@v3
@@ -56,7 +48,3 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           npm run release -- ${{ github.event.inputs.version_digit }} --ci
-
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
