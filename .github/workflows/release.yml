@@ -52,5 +52,6 @@ jobs:
       - name: Run shell script
         shell: bash
         run: scripts/create-homebrew-tap-pr.sh
+        permissions: write-all
         env:
           VERSION: ${{ env.VERSION }}
