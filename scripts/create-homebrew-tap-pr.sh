@@ -20,12 +20,14 @@ FILE_ARM64=brew-distribution/danger-macos-arm64.zip
 # echo "SHA_ARM64=$SHA_ARM64"
 
 mkdir -p ~/.ssh
-echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/id_rsa
+echo "${HOMEBREW_TAP_EXP_DEPLOY_KEY}" > ~/.ssh/id_rsa
 chmod 0600 ~/.ssh/id_rsa
 git config user.name danger
 git config user.email danger@users.noreply.github.com
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
+echo "p"
+cat ~/.ssh/id_rsa
 echo "$ ssh-add -L"
 ssh-add -L
 echo "$ ssh-keyscan"
