@@ -26,11 +26,12 @@ echo "HOMEBREW_TAP_TMPDIR=$HOMEBREW_TAP_TMPDIR" # H| Remove later
 git clone --depth 1 https://github.com/pepix/homebrew-tap-exp.git "$HOMEBREW_TAP_TMPDIR" # H| Fix later
 cd "$HOMEBREW_TAP_TMPDIR" || exit 1
 
-echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/deploy_key.pem
-chmod 600 ~/deploy_key.pem
+mkdir -p ~/.ssh
+echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/identity
 git config user.name danger
 git config user.email danger@users.noreply.github.com
-ssh -i ~/deploy_key.pem -o StrictHostKeyChecking=no -F /dev/null
+ssh -i ~/.ssh/identity -o StrictHostKeyChecking=no -F /dev/null
+ssh -T git@github.com
 
 # Write formula
 echo "class DangerJs < Formula" > danger-js.rb
