@@ -56,6 +56,8 @@ echo "end" >> danger-js.rb
 # Commit changes
 git add danger-js.rb
 git commit -m "Releasing danger-js version ${VERSION}"
+git remote rm origin
+git remote add origin https://danger:${GITHUB_TOKEN}@github.com/pepix/homebrew-tap-exp.git # H| Update later
 git push origin master
 
 # H| ^ Remove comment out
