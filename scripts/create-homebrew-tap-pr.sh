@@ -1,7 +1,6 @@
 #!/bin/bash
 
 [ -z ${VERSION+x} ] && { echo "VERSION is missing"; exit 1; }
-# [ -z $1 ] && { echo "VERSION is missing"; exit 1; }
 
 FILE_X64=brew-distribution/danger-macos-x64.zip
 FILE_ARM64=brew-distribution/danger-macos-arm64.zip
@@ -27,8 +26,11 @@ echo "HOMEBREW_TAP_TMPDIR=$HOMEBREW_TAP_TMPDIR" # H| Remove later
 git clone --depth 1 https://github.com/pepix/homebrew-tap-exp.git "$HOMEBREW_TAP_TMPDIR" # H| Fix later
 cd "$HOMEBREW_TAP_TMPDIR" || exit 1
 
+echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/deploy_key.pem
+chmod 600 ~/deploy_key.pem
 git config user.name danger
 git config user.email danger@users.noreply.github.com
+ssh -i ~/deploy_key.pem -o StrictHostKeyChecking=no -F /dev/null
 
 # Write formula
 echo "class DangerJs < Formula" > danger-js.rb
@@ -57,7 +59,7 @@ echo "end" >> danger-js.rb
 git add danger-js.rb
 git commit -m "Releasing danger-js version ${VERSION}"
 git remote rm origin
-git remote add origin https://danger:${GITHUB_TOKEN}@github.com/pepix/homebrew-tap-exp.git # H| Update later
+git remote add origin git@github.com:pepix/homebrew-tap-exp.git # H| Update later
 git push origin master
 
 # H| ^ Remove comment out

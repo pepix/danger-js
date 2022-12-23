@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      HOMEBREW_TAP_EXP_DEPLOY_KEY: ${{ secrets.HOMEBREW_TAP_EXP_DEPLOY_KEY }}
     permissions: write-all
     steps:
       - name: Set up QEMU
