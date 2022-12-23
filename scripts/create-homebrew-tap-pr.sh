@@ -28,7 +28,7 @@ cd "$HOMEBREW_TAP_TMPDIR" || exit 1
 
 mkdir -p ~/.ssh
 echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/id_ed25519
-chmod 0600 ~/.ssh/id_rsa
+chmod 0600 ~/.ssh/id_ed25519
 git config user.name danger
 git config user.email danger@users.noreply.github.com
 ssh-add ~/.ssh/id_ed25519
