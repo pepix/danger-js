@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# [ -z ${VERSION+x} ] && { echo "VERSION is missing"; exit 1; }
-[ -z $1 ] && { echo "VERSION is missing"; exit 1; }
+echo $1
+echo $VERSION
+echo ${VERSION}
+
+[ -z ${VERSION+x} ] && { echo "VERSION is missing"; exit 1; }
+# [ -z $1 ] && { echo "VERSION is missing"; exit 1; }
 
 FILE_X64=brew-distribution/danger-macos-x64.zip
 FILE_ARM64=brew-distribution/danger-macos-arm64.zip

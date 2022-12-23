@@ -48,10 +48,19 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           npm run release -- ${{ github.event.inputs.version_digit }} --ci
+
+      - name: Show env
+        run: env
       
-      - name: Run shell script
+      - name: Run shell script (1)
         shell: bash
-        run: scripts/create-homebrew-tap-pr.sh $VERSION
+        run: echo "scripts/create-homebrew-tap-pr.sh $VERSION"
+
+      - name: Run shell script (2)
+        shell: bash
+        run: scripts/create-homebrew-tap-pr.sh ${{ env.VERSION }}
+        env:
+          VERSION: ${{ env.VERSION }}
 
       - name: Check ruby file
         run: cat danger-js.rb
