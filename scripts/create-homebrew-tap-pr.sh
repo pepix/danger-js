@@ -21,7 +21,7 @@ echo "SHA_ARM64=$SHA_ARM64"
 
 # Set up SSH
 mkdir -p ~/.ssh
-echo "${HOMEBREW_TAP_EXP_DEPLOY_KEY}" > ~/.ssh/id_rsa
+echo "${HOMEBREW_TAP_DEPLOY_SECRET_KEY}" > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 git config --global user.name danger
 git config --global user.email danger@users.noreply.github.com
