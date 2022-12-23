@@ -20,20 +20,18 @@ FILE_ARM64=brew-distribution/danger-macos-arm64.zip
 # echo "SHA_ARM64=$SHA_ARM64"
 
 mkdir -p ~/.ssh
-echo "${HOMEBREW_TAP_EXP_DEPLOY_KEY}" > ~/.ssh/id_rsa
-chmod 0600 ~/.ssh/id_rsa
-git config user.name danger
-git config user.email danger@users.noreply.github.com
+echo "${HOMEBREW_TAP_EXP_DEPLOY_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
+chmod 700 ~/.ssh/id_rsa
+git config --global user.name danger
+git config --global user.email danger@users.noreply.github.com
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 echo "p"
-cat ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa | sed 's/./& /g'
 echo "$ ssh-add -L"
 ssh-add -L
 echo "$ ssh-keyscan"
 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-echo "# cat ~/.ssh/config"
-cat ~/.ssh/config
 echo "# ssh -vT git@github.com"
 ssh -o StrictHostKeyChecking=no -F /dev/null -vT git@github.com
 # ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -F /dev/null
