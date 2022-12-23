@@ -20,15 +20,19 @@ FILE_ARM64=brew-distribution/danger-macos-arm64.zip
 # echo "SHA_ARM64=$SHA_ARM64"
 
 mkdir -p ~/.ssh
-echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/id_ed25519
-chmod 0600 ~/.ssh/id_ed25519
+echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/id_rsa
+chmod 0600 ~/.ssh/id_rsa
 git config user.name danger
 git config user.email danger@users.noreply.github.com
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
+ssh-add ~/.ssh/id_rsa
+echo "$ ssh-keyscan"
 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-# ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -F /dev/null
+echo "# cat ~/.ssh/config"
+cat ~/.ssh/config
+echo "# ssh -vT git@github.com"
 ssh -vT git@github.com
+# ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -F /dev/null
 
 # Clone tap repo
 HOMEBREW_TAP_TMPDIR=$(mktemp -d)
