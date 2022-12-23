@@ -23,11 +23,12 @@ echo "SHA_ARM64=$SHA_ARM64"
 # Clone tap repo
 HOMEBREW_TAP_TMPDIR=$(mktemp -d)
 echo "HOMEBREW_TAP_TMPDIR=$HOMEBREW_TAP_TMPDIR" # H| Remove later
-git clone --depth 1 https://github.com/danger/homebrew-tap.git "$HOMEBREW_TAP_TMPDIR"
+# git clone --depth 1 https://github.com/danger/homebrew-tap.git "$HOMEBREW_TAP_TMPDIR"
+git clone --depth 1 https://github.com/pepix/homebrew-tap-exp.git "$HOMEBREW_TAP_TMPDIR" # H| Fix later
 cd "$HOMEBREW_TAP_TMPDIR" || exit 1
 
-# git config user.name danger
-# git config user.email danger@users.noreply.github.com
+git config user.name danger
+git config user.email danger@users.noreply.github.com
 
 # Write formula
 echo "class DangerJs < Formula" > danger-js.rb
@@ -52,12 +53,9 @@ echo "    end" >> danger-js.rb
 echo "  end" >> danger-js.rb
 echo "end" >> danger-js.rb
 
-cat danger-js.rb # H| Remove later
-echo "Finish" # H| Remove later
-
 # Commit changes
-# git add danger-js.rb
-# git commit -m "Releasing danger-js version ${VERSION}"
-# git push origin master
+git add danger-js.rb
+git commit -m "Releasing danger-js version ${VERSION}"
+git push origin master
 
 # H| ^ Remove comment out

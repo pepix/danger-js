@@ -54,6 +54,3 @@ jobs:
         run: scripts/create-homebrew-tap-pr.sh
         env:
           VERSION: ${{ env.VERSION }}
-
-      - name: Check ruby file
-        run: cat danger-js.rb
