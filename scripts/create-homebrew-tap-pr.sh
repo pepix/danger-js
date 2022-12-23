@@ -30,8 +30,9 @@ mkdir -p ~/.ssh
 echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/identity
 git config user.name danger
 git config user.email danger@users.noreply.github.com
+ssh-add ~/.ssh/identity
 ssh -i ~/.ssh/identity -o StrictHostKeyChecking=no -F /dev/null
-ssh -T git@github.com
+ssh -vT git@github.com
 
 # Write formula
 echo "class DangerJs < Formula" > danger-js.rb
