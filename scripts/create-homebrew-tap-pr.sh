@@ -26,12 +26,14 @@ git config user.name danger
 git config user.email danger@users.noreply.github.com
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
+echo "$ ssh-add -L"
+ssh-add -L
 echo "$ ssh-keyscan"
 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 echo "# cat ~/.ssh/config"
 cat ~/.ssh/config
 echo "# ssh -vT git@github.com"
-ssh -vT git@github.com
+ssh -o StrictHostKeyChecking=no -F /dev/null -vT git@github.com
 # ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -F /dev/null
 
 # Clone tap repo
