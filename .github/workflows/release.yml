@@ -21,35 +21,35 @@ jobs:
       HOMEBREW_TAP_EXP_DEPLOY_KEY: ${{ secrets.HOMEBREW_TAP_EXP_DEPLOY_KEY }}
     permissions: write-all
     steps:
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
-      # - name: Install ldid
-      #   uses: MOZGIII/install-ldid-action@v1
-      #   with:
-      #     tag: v2.1.5-procursus6
+      - name: Install ldid
+        uses: MOZGIII/install-ldid-action@v1
+        with:
+          tag: v2.1.5-procursus6
 
       - name: Check out repository code
         uses: actions/checkout@v3
         with: # H| Remove this
           ref: test-release-it
       
-      # - name: Use node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: "14"
+      - name: Use node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "14"
 
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
       
-      # - name: Build
-      #   run: npm run build
+      - name: Build
+        run: npm run build
 
-      # - name: Package
-      #   run: |
-      #     git config --global user.email "action@github.com"
-      #     git config --global user.name "GitHub Action"
-      #     npm run release -- ${{ github.event.inputs.version_digit }} --ci
+      - name: Package
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          npm run release -- ${{ github.event.inputs.version_digit }} --ci
 
       - name: Run shell script
         shell: bash

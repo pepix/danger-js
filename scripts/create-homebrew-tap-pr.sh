@@ -5,29 +5,27 @@
 FILE_X64=brew-distribution/danger-macos-x64.zip
 FILE_ARM64=brew-distribution/danger-macos-arm64.zip
 
-# if [ ! -f ${FILE_X64} ]; then
-#   echo ${FILE_X64} not found!
-#   exit 1
-# fi
-# if [ ! -f ${FILE_ARM64} ]; then
-#   echo ${FILE_ARM64} not found!
-#   exit 1
-# fi
+if [ ! -f ${FILE_X64} ]; then
+  echo ${FILE_X64} not found!
+  exit 1
+fi
+if [ ! -f ${FILE_ARM64} ]; then
+  echo ${FILE_ARM64} not found!
+  exit 1
+fi
 
-# SHA_X64=$(shasum -a 256 ${FILE_X64} | cut -f 1 -d " ")
-# echo "SHA_X64=$SHA_X64"
-# SHA_ARM64=$(shasum -a 256 ${FILE_ARM64} | cut -f 1 -d " ")
-# echo "SHA_ARM64=$SHA_ARM64"
+SHA_X64=$(shasum -a 256 ${FILE_X64} | cut -f 1 -d " ")
+echo "SHA_X64=$SHA_X64"
+SHA_ARM64=$(shasum -a 256 ${FILE_ARM64} | cut -f 1 -d " ")
+echo "SHA_ARM64=$SHA_ARM64"
 
 mkdir -p ~/.ssh
-echo "${HOMEBREW_TAP_EXP_DEPLOY_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
-chmod 700 ~/.ssh/id_rsa
+echo "${HOMEBREW_TAP_EXP_DEPLOY_KEY}" > ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
 git config --global user.name danger
 git config --global user.email danger@users.noreply.github.com
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
-echo "p"
-cat ~/.ssh/id_rsa | sed 's/./& /g'
 echo "$ ssh-add -L"
 ssh-add -L
 echo "$ ssh-keyscan"
@@ -72,5 +70,3 @@ git commit -m "Releasing danger-js version ${VERSION}"
 git remote rm origin
 git remote add origin git@github.com:pepix/homebrew-tap-exp.git # H| Update later
 git push origin master
-
-# H| ^ Remove comment out
