@@ -5,35 +5,37 @@
 FILE_X64=brew-distribution/danger-macos-x64.zip
 FILE_ARM64=brew-distribution/danger-macos-arm64.zip
 
-if [ ! -f ${FILE_X64} ]; then
-  echo ${FILE_X64} not found!
-  exit 1
-fi
-if [ ! -f ${FILE_ARM64} ]; then
-  echo ${FILE_ARM64} not found!
-  exit 1
-fi
+# if [ ! -f ${FILE_X64} ]; then
+#   echo ${FILE_X64} not found!
+#   exit 1
+# fi
+# if [ ! -f ${FILE_ARM64} ]; then
+#   echo ${FILE_ARM64} not found!
+#   exit 1
+# fi
 
-SHA_X64=$(shasum -a 256 ${FILE_X64} | cut -f 1 -d " ")
-echo "SHA_X64=$SHA_X64"
-SHA_ARM64=$(shasum -a 256 ${FILE_ARM64} | cut -f 1 -d " ")
-echo "SHA_ARM64=$SHA_ARM64"
-
-# Clone tap repo
-HOMEBREW_TAP_TMPDIR=$(mktemp -d)
-echo "HOMEBREW_TAP_TMPDIR=$HOMEBREW_TAP_TMPDIR" # H| Remove later
-# git clone --depth 1 https://github.com/danger/homebrew-tap.git "$HOMEBREW_TAP_TMPDIR"
-git clone --depth 1 https://github.com/pepix/homebrew-tap-exp.git "$HOMEBREW_TAP_TMPDIR" # H| Fix later
-cd "$HOMEBREW_TAP_TMPDIR" || exit 1
+# SHA_X64=$(shasum -a 256 ${FILE_X64} | cut -f 1 -d " ")
+# echo "SHA_X64=$SHA_X64"
+# SHA_ARM64=$(shasum -a 256 ${FILE_ARM64} | cut -f 1 -d " ")
+# echo "SHA_ARM64=$SHA_ARM64"
 
 mkdir -p ~/.ssh
 echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/id_ed25519
 chmod 0600 ~/.ssh/id_ed25519
 git config user.name danger
 git config user.email danger@users.noreply.github.com
+eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
-ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -F /dev/null
+ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+# ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -F /dev/null
 ssh -vT git@github.com
+
+# Clone tap repo
+HOMEBREW_TAP_TMPDIR=$(mktemp -d)
+echo "HOMEBREW_TAP_TMPDIR=$HOMEBREW_TAP_TMPDIR" # H| Remove later
+# git clone --depth 1 https://github.com/danger/homebrew-tap.git "$HOMEBREW_TAP_TMPDIR"
+git clone --depth 1 git@github.com:pepix/homebrew-tap-exp.git "$HOMEBREW_TAP_TMPDIR" # H| Fix later
+cd "$HOMEBREW_TAP_TMPDIR" || exit 1
 
 # Write formula
 echo "class DangerJs < Formula" > danger-js.rb
