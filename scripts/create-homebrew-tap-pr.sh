@@ -27,11 +27,11 @@ git clone --depth 1 https://github.com/pepix/homebrew-tap-exp.git "$HOMEBREW_TAP
 cd "$HOMEBREW_TAP_TMPDIR" || exit 1
 
 mkdir -p ~/.ssh
-echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/identity
+echo "$HOMEBREW_TAP_EXP_DEPLOY_KEY" > ~/.ssh/id_ed25519
 git config user.name danger
 git config user.email danger@users.noreply.github.com
-ssh-add ~/.ssh/identity
-ssh -i ~/.ssh/identity -o StrictHostKeyChecking=no -F /dev/null
+ssh-add ~/.ssh/id_ed25519
+ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -F /dev/null
 ssh -vT git@github.com
 
 # Write formula
