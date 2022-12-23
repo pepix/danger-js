@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo $1
-echo $VERSION
-echo ${VERSION}
-
 [ -z ${VERSION+x} ] && { echo "VERSION is missing"; exit 1; }
 # [ -z $1 ] && { echo "VERSION is missing"; exit 1; }
 
@@ -26,6 +22,7 @@ echo "SHA_ARM64=$SHA_ARM64"
 
 # Clone tap repo
 HOMEBREW_TAP_TMPDIR=$(mktemp -d)
+echo "HOMEBREW_TAP_TMPDIR=$HOMEBREW_TAP_TMPDIR" # H| Remove later
 git clone --depth 1 https://github.com/danger/homebrew-tap.git "$HOMEBREW_TAP_TMPDIR"
 cd "$HOMEBREW_TAP_TMPDIR" || exit 1
 
@@ -55,9 +52,12 @@ echo "    end" >> danger-js.rb
 echo "  end" >> danger-js.rb
 echo "end" >> danger-js.rb
 
+cat danger-js.rb # H| Remove later
+echo "Finish" # H| Remove later
+
 # Commit changes
 # git add danger-js.rb
 # git commit -m "Releasing danger-js version ${VERSION}"
 # git push origin master
 
-# ^ Remove comment out
+# H| ^ Remove comment out

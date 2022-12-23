@@ -29,7 +29,7 @@ jobs:
 
       - name: Check out repository code
         uses: actions/checkout@v3
-        with: # Remove this
+        with: # H| Remove this
           ref: test-release-it
       
       - name: Use node
@@ -49,16 +49,9 @@ jobs:
           git config --global user.name "GitHub Action"
           npm run release -- ${{ github.event.inputs.version_digit }} --ci
 
-      - name: Show env
-        run: env
-      
-      - name: Run shell script (1)
+      - name: Run shell script
         shell: bash
-        run: echo "scripts/create-homebrew-tap-pr.sh $VERSION"
-
-      - name: Run shell script (2)
-        shell: bash
-        run: scripts/create-homebrew-tap-pr.sh ${{ env.VERSION }}
+        run: scripts/create-homebrew-tap-pr.sh
         env:
           VERSION: ${{ env.VERSION }}
 
